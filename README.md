@@ -222,6 +222,27 @@ separator for your shell.
 
 ## Use the app
 
+![Drawing notes on the grid and playing them back](docs/assets/usage-draw-play.gif)
+
+*Real screen recording from the app: drag on the grid to draw a melody, then
+tap **Play**.*
+
+### Quick start
+
+1. **Draw** — drag across the grid to place notes; the `Line …` label shows
+   the pitch under your selection. Use the pencil control to switch between
+   drawing and erasing.
+2. **Shape the sound** — tap **Instrument** to browse presets, **C** to pick a
+   key, and **Musical Scale** to pick a scale. Change tempo with **−** / **+**
+   beside the BPM value.
+3. **Play** — tap **Play** to hear the pattern; enable **Loop** to repeat the
+   frame sequence.
+4. **Build a song** — tap **+** next to the frame strip to add a frame (each
+   frame has its own grid, and frames play in sequence). Tap **Save to
+   library** to keep the project, or **Export** to write a WAV or MIDI file.
+
+The sections below describe each control in detail.
+
 ### Make a pattern
 
 1. Open **Library** and select a **Starter project** to explore an example, or begin
