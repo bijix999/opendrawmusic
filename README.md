@@ -3,12 +3,10 @@
 Open Draw Music is an Android app for drawing notes on a musical grid, arranging them
 across frames, playing the sequence with FluidSynth, and exporting it as WAV or MIDI.
 
-> **Repository URL:** This checkout does not contain the app's Git remote, so the clone
-> URL below is a template. Replace `OWNER/REPOSITORY` with the published GitHub
-> organization/user and repository name before sharing this README.
+> **Repository URL:** https://github.com/bijix999/opendrawmusic
 >
 > ```text
-> https://github.com/OWNER/REPOSITORY
+> https://github.com/bijix999/opendrawmusic
 > ```
 
 ## Features
@@ -46,10 +44,10 @@ using CMake.
 
 ## Get the source from GitHub
 
-Replace the example URL and directory with the actual published app repository:
+Clone the app repository:
 
 ```powershell
-git clone https://github.com/OWNER/REPOSITORY.git OpenDrawMusic
+git clone https://github.com/bijix999/opendrawmusic.git OpenDrawMusic
 Set-Location OpenDrawMusic
 ```
 
