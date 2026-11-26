@@ -19,9 +19,19 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("D:/vibecoded/Open Draw Music/personal-keystore/personal-drawmusic.keystore")
+            storePassword = project.findProperty("RELEASE_STORE_PASSWORD") as String?
+            keyAlias = "personal-drawmusic"
+            keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as String?
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
