@@ -79,6 +79,87 @@ Studio creates or updates it with the local Android SDK path. Do not commit that
 The app's minimum SDK is API 24. It targets API 36. A device with another CPU ABI may
 not be able to install this build.
 
+## Build without Android Studio
+
+Android Studio is optional. The build only needs the SDK *components* (Platform 36,
+NDK, CMake 3.22.1, Platform-Tools) and a JDK — the IDE itself is never invoked by
+Gradle. This section documents the command-line-only path; it has been verified on
+this machine (build completed with `BUILD SUCCESSFUL`, native FluidSynth configured
+and compiled for both ABIs, with no Android Studio running).
+
+### Prerequisites
+
+- JDK 17 or newer (JDK 21 recommended; verified with Microsoft OpenJDK 21.0.13.102).
+- Android SDK directory containing:
+  - `platforms/android-36`
+  - an NDK (Side by side) install — no `ndkVersion` is pinned in
+    `app/build.gradle.kts`, so AGP resolves the installed default
+    (verified: NDK `27.0.12077973`)
+  - `cmake/3.22.1`
+  - `build-tools/` for compile SDK 36 (verified: `35.0.0`)
+  - `platform-tools/` (provides `adb`)
+- The Gradle wrapper (`gradlew` / `gradlew.bat`) downloads Gradle 8.12 on first run.
+
+If the components are missing, install them without the IDE using the bundled
+command-line tools:
+
+```powershell
+C:\Android\cmdline-tools\latest\bin\sdkmanager.bat "platforms;android-36" `
+  "ndk;27.0.12077973" "cmake;3.22.1" "build-tools;35.0.0" "platform-tools"
+```
+
+Adjust the SDK root to your install location. The verified environment on this
+machine is:
+
+| Item | Value |
+|---|---|
+| `ANDROID_HOME` | `C:\Android` (also set in `local.properties` as `sdk.dir`) |
+| JDK (`JAVA_HOME`) | `C:\Program Files\Microsoft\jdk-21.0.13.102-hotspot` |
+| NDK | `C:\Android\ndk\27.0.12077973` |
+| CMake | `C:\Android\cmake\3.22.1` |
+| `adb` | `C:\Android\platform-tools\adb.exe` |
+
+Gradle finds the SDK through either `ANDROID_HOME` / `ANDROID_SDK_ROOT` or
+`local.properties` (`sdk.dir=`). Keep `local.properties` machine-specific and
+uncommitted, as described above.
+
+### Build, install, and run from the command line
+
+Windows (PowerShell):
+
+```powershell
+$env:JAVA_HOME = "C:\Program Files\Microsoft\jdk-21.0.13.102-hotspot"
+$env:Path = "$env:JAVA_HOME\bin;$env:Path"
+.\gradlew.bat :app:testDebugUnitTest :app:assembleDebug :app:lintDebug
+
+C:\Android\platform-tools\adb.exe devices -l
+C:\Android\platform-tools\adb.exe install -r ".\app\build\outputs\apk\debug\app-debug.apk"
+C:\Android\platform-tools\adb.exe shell am start -n com.opendrawmusic/.MainActivity
+```
+
+macOS or Linux:
+
+```bash
+export JAVA_HOME="/path/to/jdk-21"
+export PATH="$JAVA_HOME/bin:$PATH"
+export ANDROID_HOME="/path/to/android-sdk"
+./gradlew :app:testDebugUnitTest :app:assembleDebug :app:lintDebug
+
+adb devices -l
+adb install -r ./app/build/outputs/apk/debug/app-debug.apk
+adb shell am start -n com.opendrawmusic/.MainActivity
+```
+
+Notes:
+
+- The first build compiles FluidSynth from `third_party/fluidsynth` for both ABIs and
+  can take several minutes; later builds are incremental (a no-op rebuild of this
+  project completed in about 9 seconds).
+- The unit test, assemble, and lint tasks can be run individually; see the next
+  section.
+- Android Studio remains useful as an IDE and as a GUI for managing SDK components,
+  but it is not required to build, install, or test the app.
+
 ## Build, test, and lint
 
 Run these commands from the project root.
