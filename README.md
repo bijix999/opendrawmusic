@@ -123,7 +123,9 @@ To run each Gradle task separately, use `:app:testDebugUnitTest` for unit tests,
    `-r` reinstalls or updates the app while preserving its existing app data when the
    package signature is compatible.
 
-4. Launch the app:
+   '''".\app\build\outputs\apk\debug\app-debug.apk"''' are the APK directory. You may download the APK from [Releases](https://github.com/bijix999/opendrawmusic/releases) and use the newly downloaded APK directory replacing '''".\app\build\outputs\apk\debug\app-debug.apk"'''
+
+5. Launch the app:
 
    ```powershell
    adb -s DEVICE_SERIAL shell am start -n com.opendrawmusic/.MainActivity
